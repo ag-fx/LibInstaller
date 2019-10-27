@@ -1,6 +1,5 @@
 package com.hyperiumjailbreak.backend.utils
 
-import com.hyperiumjailbreak.backend.callback.Callback
 import com.google.common.io.Files
 import com.hyperiumjailbreak.backend.utils.OS.*
 import org.apache.commons.io.FileUtils
@@ -36,12 +35,16 @@ object Utils {
         }
     }
 
-    fun downloadLaunchWrapper(libraries: File, callback: Callback) {
+    fun downloadLaunchWrapper(libraries: File) {
         val launchWrapper = File(libraries, "net" + sep + "minecraft" + sep + "launchwrapper" + sep + "1.7" + sep + "launchwrapper-1.7.jar")
         launchWrapper.parentFile.mkdirs()
         if (!launchWrapper.exists()) {
             println("Downloading LaunchWrapper")
-            DownloadTask("https://libraries.minecraft.net/net/minecraft/launchwrapper/1.7/launchwrapper-1.7.jar", launchWrapper.parentFile.absolutePath, callback)
+            download(
+                    "https://libraries.minecraft.net/net/minecraft/launchwrapper/1.7/launchwrapper-1.7.jar",
+                    "launchwrapper-1.7.jar",
+                    launchWrapper
+            )
         }
     }
 
@@ -101,6 +104,7 @@ object Utils {
 
     @Throws(ClassNotFoundException::class)
     private fun getJvmClass(url: URL, c: String): Class<*> {
+        // gotta admit, kotlin makes this look way better then java
         return URLClassLoader(arrayOf(url)).loadClass(c)
     }
 
@@ -115,7 +119,6 @@ object Utils {
             val patcher = getJvmClass(optifine.toURI().toURL(), "optifine.Patcher")
             val main = patcher.getMethod("main", Array<String>::class.java)
             main.invoke(null, arrayOf<Any>(arrayOf<String>(originJar.absolutePath, optifine.absolutePath, optifineLib.absolutePath)))
-            return "did it"
         } catch (ex: Exception) {
             println("! - Couldn't patch OptiFine!")
             ex.printStackTrace()
@@ -123,6 +126,7 @@ object Utils {
         }
 
         optifine.delete()
+        return "did it"
     }
 
     @Throws(IOException::class)

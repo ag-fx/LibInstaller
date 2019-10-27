@@ -3,19 +3,14 @@ package com.hyperiumjailbreak.backend
 import cc.hyperium.installer.ProtectionDomain
 import com.google.common.io.Files
 import com.hyperiumjailbreak.backend.callback.Callback
-import com.hyperiumjailbreak.backend.utils.DownloadTask
 import com.hyperiumjailbreak.backend.utils.Utils
+import com.hyperiumjailbreak.backend.utils.download
 import java.io.File
 import java.io.IOException
 
 @Suppress("UnstableApiUsage")
 object InstallationUtils {
     val callback = Callback()
-
-    init {
-        System.setProperty("http.agent", "Mozilla/5.0 HJBInstall")
-        install()
-    }
 
     fun install() {
         println("Starting...")
@@ -58,7 +53,12 @@ object InstallationUtils {
 
                 val tmpDir = java.nio.file.Files.createTempDirectory("Hyperium").toFile()
 
-                val optifine = File(tmpDir, DownloadTask("https://hyperiumjailbreak.mycloudrepo.io/public/repositories/addons/OptiFine_1.8.9_HD_U_I7.jar", tmpDir.toString(), callback).download())
+                download(
+                        "https://hyperiumjailbreak.mycloudrepo.io/public/repositories/addons/OptiFine_1.8.9_HD_U_I7.jar",
+                        "OptiFine.jar",
+                        tmpDir
+                )
+                val optifine = File(tmpDir, "OptiFine.jar")
 
                 val targetJson = File(target, "Hyperium 1.8.9.json")
                 val targetJar = File(target, "Hyperium 1.8.9.jar")
@@ -68,7 +68,7 @@ object InstallationUtils {
                 val addonsDir = File(mc, "addons")
                 if (!addonsDir.exists()) addonsDir.mkdirs()
 
-                Utils.downloadLaunchWrapper(libraries, callback)
+                Utils.downloadLaunchWrapper(libraries)
 
                 val e = Utils.patchOptifine(libraries, optifine, originJar)
                 if(e == "uh oh") {
