@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.hyperiumjailbreak</groupId>
     <artifactId>LibInstaller</artifactId>
-    <version>0.8-snap8</version>
+    <version>0.8-snap9</version>
     <inceptionYear>2019</inceptionYear>
     <description>New installer for HyperiumJailbreak.</description>
     <packaging>jar</packaging>

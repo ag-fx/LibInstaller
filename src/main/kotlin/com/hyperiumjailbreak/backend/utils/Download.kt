@@ -17,9 +17,7 @@ fun download(dlUrl: String, outName: String, outDir: File) {
 
     if(status in 400..599) throw Exception("Got response code $status")
 
-    val file = File(outDir, outName)
-    file.mkdirs()
-    val fpath = file.toPath()
+    val fpath = File(outDir, outName).toPath()
 
     BufferedReader(
             InputStreamReader(connection.inputStream)

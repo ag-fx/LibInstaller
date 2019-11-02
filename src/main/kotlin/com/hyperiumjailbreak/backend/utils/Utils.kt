@@ -103,9 +103,9 @@ object Utils {
     }
 
     @Throws(ClassNotFoundException::class)
-    private fun getJvmClass(url: URL, c: String): Class<*> {
+    private fun getJvmClassOptifinePatcher(url: URL): Class<*> {
         // gotta admit, kotlin makes this look way better then java
-        return URLClassLoader(arrayOf(url)).loadClass(c)
+        return URLClassLoader(arrayOf(url)).loadClass("optifine.Patcher")
     }
 
     fun patchOptifine(libraries: File, optifine: File, originJar: File): String {
@@ -116,7 +116,7 @@ object Utils {
             println("Created OptiFine library directory")
             val optifineLib = File(optifineLibDir, "OptiFine-1.8.9_HD_U_I7.jar")
 
-            val patcher = getJvmClass(optifine.toURI().toURL(), "optifine.Patcher")
+            val patcher = getJvmClassOptifinePatcher(optifine.toURI().toURL())
             val main = patcher.getMethod("main", Array<String>::class.java)
             main.invoke(null, arrayOf<Any>(arrayOf<String>(originJar.absolutePath, optifine.absolutePath, optifineLib.absolutePath)))
         } catch (ex: Exception) {

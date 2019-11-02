@@ -51,8 +51,6 @@ object InstallationUtils {
                     callback.sendText("Couldn't copy local Jar")
                 }
 
-                //val tmpDir = java.nio.file.Files.createTempDirectory("Hyperium").toFile()
-
                 download(
                         "https://hyperiumjailbreak.mycloudrepo.io/public/repositories/addons/OptiFine_1.8.9_HD_U_I7.jar",
                         "OptiFine.jar",
@@ -78,6 +76,9 @@ object InstallationUtils {
                 }
 
                 Utils.buildAndSetLauncherProfiles(mc, target)
+
+                callback.sendCode(0)
+                callback.sendText("Done!! Launch from MC Launcher.")
             }
         }
     }
