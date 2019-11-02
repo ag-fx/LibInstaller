@@ -51,14 +51,14 @@ object InstallationUtils {
                     callback.sendText("Couldn't copy local Jar")
                 }
 
-                val tmpDir = java.nio.file.Files.createTempDirectory("Hyperium").toFile()
+                //val tmpDir = java.nio.file.Files.createTempDirectory("Hyperium").toFile()
 
                 download(
                         "https://hyperiumjailbreak.mycloudrepo.io/public/repositories/addons/OptiFine_1.8.9_HD_U_I7.jar",
                         "OptiFine.jar",
-                        tmpDir
+                        mc
                 )
-                val optifine = File(tmpDir, "OptiFine.jar")
+                val optifine = File(mc, "OptiFine.jar")
 
                 val targetJson = File(target, "Hyperium 1.8.9.json")
                 val targetJar = File(target, "Hyperium 1.8.9.jar")
