@@ -9,20 +9,24 @@ import java.nio.file.Files
 
 @Throws(Exception::class)
 fun download(dlUrl: String, outName: String, outDir: File) {
-    val url = URL(dlUrl)
-    val connection = url.openConnection() as HttpURLConnection
+    val connection = URL(dlUrl).openConnection() as HttpURLConnection
     connection.requestMethod = "GET"
 
-    println("Got response code ${connection.responseCode}")
+    val status = connection.responseCode
+    println("Got response code $status")
 
-    val response = StringBuilder()
-    BufferedReader(InputStreamReader(connection.inputStream)).use { inputThing ->
-        val line: String? = inputThing.readLine()
-        while (line != null) {
-            response.append(line)
-        }
-    }
+    if(status in 400..599) throw Exception("Got response code $status")
+
     val file = File(outDir, outName)
     file.mkdirs()
-    Files.write(file.toPath(), response.toString().toByteArray())
+    val fpath = file.toPath()
+
+    BufferedReader(
+            InputStreamReader(connection.inputStream)
+    ).use { inputThing ->
+        val line: String? = inputThing.readLine()
+        while (line != null) {
+            Files.write(fpath, line.toByteArray())
+        }
+    }
 }

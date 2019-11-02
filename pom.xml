@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.hyperiumjailbreak</groupId>
     <artifactId>LibInstaller</artifactId>
-    <version>0.8-snap6</version>
+    <version>0.8-snap7</version>
     <inceptionYear>2019</inceptionYear>
     <description>New installer for HyperiumJailbreak.</description>
     <packaging>jar</packaging>
@@ -113,7 +113,7 @@
                         <configuration>
                             <archive>
                                 <manifest>
-                                    <mainClass>${main.class}</mainClass>
+                                    <mainClass>com.hyperiumjailbreak.InstallerMainKt</mainClass>
                                 </manifest>
                             </archive>
                             <descriptorRefs>
