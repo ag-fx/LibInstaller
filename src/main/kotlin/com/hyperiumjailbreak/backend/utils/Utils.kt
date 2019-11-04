@@ -42,7 +42,6 @@ object Utils {
             println("Downloading LaunchWrapper")
             download(
                     "https://libraries.minecraft.net/net/minecraft/launchwrapper/1.7/launchwrapper-1.7.jar",
-                    "launchwrapper-1.7.jar",
                     launchWrapper
             )
         }
@@ -92,6 +91,7 @@ object Utils {
         if (target.exists()) {
             println("Deleting old files...")
             FileUtils.deleteDirectory(target)
+            println("Deleted old files")
         }
         // the phoenix of the target rises from the ashes
         target.mkdirs()
@@ -151,7 +151,7 @@ object Utils {
                 .put("lastUsed", instant)
                 .put("lastVersionId", "HyperiumJailbreak 1.8.9")
                 .put("javaArgs", "-Duser.country=US -Duser.language=en -Xms512M -Xmx${ram}G")
-                .put("icon", iconInBase64)
+                .put("icon", Data.iconInBase64)
         if (System.getProperty("java.version").startsWith("1.8") && System.getProperty("sun.arch.data.model", "").equals("64", ignoreCase = true)) {
             val file = File(System.getProperty("java.home"), "bin" + sep + "java" + if (getOS() === Windows) "w.exe" else "")
             if (file.exists()) {
