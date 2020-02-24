@@ -52,7 +52,7 @@ object InstallationUtils {
                 }
 
                 download(
-                        "https://hyperiumjailbreak.mycloudrepo.io/public/repositories/addons/OptiFine_1.8.9_HD_U_I7.jar",
+                        "http://raw.githubusercontent.com/hyperiumjailbreak/tools/master/OptiFine_1.8.9_HD_U_I7.jar",
                         mc
                 )
                 val optifine = File(mc, "OptiFine_1.8.9_HD_U_I7.jar")
